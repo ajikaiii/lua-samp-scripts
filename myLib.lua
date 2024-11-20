@@ -55,13 +55,13 @@ local fonts = {
 }
 
 local font_flags = {
-    0x0, --без оформления
-    0x1, --жирный
-    0x2, --наклонный
-    0x4, --обводка
-    0x8, --тень
-    0x10, --подчеркнутый
-    0x20 --зачеркнутый
+    0x0, --Р±РµР· РѕС„РѕСЂРјР»РµРЅРёСЏ
+    0x1, --Р¶РёСЂРЅС‹Р№
+    0x2, --РЅР°РєР»РѕРЅРЅС‹Р№
+    0x4, --РѕР±РІРѕРґРєР°
+    0x8, --С‚РµРЅСЊ
+    0x10, --РїРѕРґС‡РµСЂРєРЅСѓС‚С‹Р№
+    0x20 --Р·Р°С‡РµСЂРєРЅСѓС‚С‹Р№
 }
 
 --[[ local font_flags = {
@@ -76,13 +76,13 @@ local font_flags = {
  ]]
 
 local font_flags_name = {
-    "Без оформления", --без оформления
-    "Жирный", --жирный
-    "Наклонный", --наклонный
-    "Обводка", --обводка
-    "Тень", --тень
-    "Подчеркнутый", --подчеркнутый
-    "Зачеркнутый" --зачеркнутый
+    u8"Р‘РµР· РѕС„РѕСЂРјР»РµРЅРёСЏ", --Р±РµР· РѕС„РѕСЂРјР»РµРЅРёСЏ
+    u8"Р–РёСЂРЅС‹Р№", --Р¶РёСЂРЅС‹Р№
+    u8"РќР°РєР»РѕРЅРЅС‹Р№", --РЅР°РєР»РѕРЅРЅС‹Р№
+    "РћР±РІРѕРґРєР°", --РѕР±РІРѕРґРєР°
+    "РўРµРЅСЊ", --С‚РµРЅСЊ
+    "РџРѕРґС‡РµСЂРєРЅСѓС‚С‹Р№", --РїРѕРґС‡РµСЂРєРЅСѓС‚С‹Р№
+    "Р—Р°С‡РµСЂРєРЅСѓС‚С‹Р№" --Р·Р°С‡РµСЂРєРЅСѓС‚С‹Р№
 }
 
 
@@ -93,12 +93,12 @@ end
 function EXPORTS.aboutme()
 
     id = select(2, sampGetPlayerIdByCharHandle(PLAYER_PED))
-    sampAddChatMessage('Мой ID: '..id, -1)
-    sampAddChatMessage('Мой ник: '..sampGetPlayerNickname(id), -1)
-    sampAddChatMessage('Мой лвл: '..sampGetPlayerScore(id), -1)
-    sampAddChatMessage('Мой пинг: '..sampGetPlayerPing(id), -1)
-    sampAddChatMessage('Мое здоровье: '..sampGetPlayerHealth(id), -1)
-    sampAddChatMessage('Моя броня: '..sampGetPlayerArmor(id), -1)
+    sampAddChatMessage('РњРѕР№ ID: '..id, -1)
+    sampAddChatMessage('РњРѕР№ РЅРёРє: '..sampGetPlayerNickname(id), -1)
+    sampAddChatMessage('РњРѕР№ Р»РІР»: '..sampGetPlayerScore(id), -1)
+    sampAddChatMessage('РњРѕР№ РїРёРЅРі: '..sampGetPlayerPing(id), -1)
+    sampAddChatMessage('РњРѕРµ Р·РґРѕСЂРѕРІСЊРµ: '..sampGetPlayerHealth(id), -1)
+    sampAddChatMessage('РњРѕСЏ Р±СЂРѕРЅСЏ: '..sampGetPlayerArmor(id), -1)
 end
 
 
@@ -108,20 +108,20 @@ end
 
 
 
- --РАБОТА С ФАЙЛАМИ (СОЗДАНИЕ ДИРЕКТОРИЙ, ФАЙЛОВ, СОХРАНЕНИЕ)
+ --Р РђР‘РћРўРђ РЎ Р¤РђР™Р›РђРњР (РЎРћР—Р”РђРќРР• Р”РР Р•РљРўРћР РР™, Р¤РђР™Р›РћР’, РЎРћРҐР РђРќР•РќРР•)
 
 --[[
 	function EXPORTS.onDirectoryCreated(directory, path, a, v) 
-	Проверяет директорию (directory) на существование, если нет, создает
-	Проверяет файл (path) на существование, если нет, создает, сохраняет в него массив (a) 
+	РџСЂРѕРІРµСЂСЏРµС‚ РґРёСЂРµРєС‚РѕСЂРёСЋ (directory) РЅР° СЃСѓС‰РµСЃС‚РІРѕРІР°РЅРёРµ, РµСЃР»Рё РЅРµС‚, СЃРѕР·РґР°РµС‚
+	РџСЂРѕРІРµСЂСЏРµС‚ С„Р°Р№Р» (path) РЅР° СЃСѓС‰РµСЃС‚РІРѕРІР°РЅРёРµ, РµСЃР»Рё РЅРµС‚, СЃРѕР·РґР°РµС‚, СЃРѕС…СЂР°РЅСЏРµС‚ РІ РЅРµРіРѕ РјР°СЃСЃРёРІ (a) 
 
-	Использование:
-	Добавляем вверху скрипта, в котором хотим использовать функцию:
+	РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ:
+	Р”РѕР±Р°РІР»СЏРµРј РІРІРµСЂС…Сѓ СЃРєСЂРёРїС‚Р°, РІ РєРѕС‚РѕСЂРѕРј С…РѕС‚РёРј РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ С„СѓРЅРєС†РёСЋ:
 
 	local myLib = import 'myLib.lua'
 	local inicfg = require 'inicfg'
 
-	local path = getWorkingDirectory() .. "\\config\\Название.ini"
+	local path = getWorkingDirectory() .. "\\config\\РќР°Р·РІР°РЅРёРµ.ini"
 	local MainIni = inicfg.load({
 	Main = {
 		  main = 0
@@ -130,8 +130,8 @@ end
 	}, path)
 	inicfg.save(MainIni,path)
 
-	Для использования в скрипте прописываем:
-	myLib.onDirectoryCreated( { "config" }, path, MainIni, "\\Название.ini")
+	Р”Р»СЏ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ РІ СЃРєСЂРёРїС‚Рµ РїСЂРѕРїРёСЃС‹РІР°РµРј:
+	myLib.onDirectoryCreated( { "config" }, path, MainIni, "\\РќР°Р·РІР°РЅРёРµ.ini")
 	
 ]]
 function EXPORTS.onDirectoryCreated(directory, path, a, v) 
@@ -157,10 +157,10 @@ end
 --[[
 function OpenFile(arg)
 
-Функция для создания файла и записи в него
+Р¤СѓРЅРєС†РёСЏ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ С„Р°Р№Р»Р° Рё Р·Р°РїРёСЃРё РІ РЅРµРіРѕ
 
-Использование:
-	Добавляем вверху скрипта, в котором хотим использовать функцию:
+РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ:
+	Р”РѕР±Р°РІР»СЏРµРј РІРІРµСЂС…Сѓ СЃРєСЂРёРїС‚Р°, РІ РєРѕС‚РѕСЂРѕРј С…РѕС‚РёРј РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ С„СѓРЅРєС†РёСЋ:
 
 	local myLib = import 'myLib.lua'
 
@@ -205,7 +205,7 @@ end
 
 
 
---РАБОТА С ФОРМАТИРОВАНИЕМ ТЕКСТА НА ЭКРАНЕ МОНИТОРА
+--Р РђР‘РћРўРђ РЎ Р¤РћР РњРђРўРР РћР’РђРќРР•Рњ РўР•РљРЎРўРђ РќРђ Р­РљР РђРќР• РњРћРќРРўРћР Рђ
 
 function EXPORTS.onFonts()
 	return fonts
@@ -238,7 +238,7 @@ end
 
 
 
---РАБОТА С МАССИВАМИ
+--Р РђР‘РћРўРђ РЎ РњРђРЎРЎРР’РђРњР
 
 function EXPORTS.onReadToArray(patchFile, array)
 	encoding.default = 'UTF-8'
@@ -299,8 +299,8 @@ function EXPORTS.onCheckingPlayerOnline(playerId)
 end
 
 function EXPORTS.comparisonOfNicknames(nick)
-	for i = 0, sampGetMaxPlayerId() do -- цикл перебирающий числа (id) от 0 до максимального который есть на сервере
-    	if sampIsPlayerConnected(i) then -- если в игре то добавляем в массив его ник
+	for i = 0, sampGetMaxPlayerId() do -- С†РёРєР» РїРµСЂРµР±РёСЂР°СЋС‰РёР№ С‡РёСЃР»Р° (id) РѕС‚ 0 РґРѕ РјР°РєСЃРёРјР°Р»СЊРЅРѕРіРѕ РєРѕС‚РѕСЂС‹Р№ РµСЃС‚СЊ РЅР° СЃРµСЂРІРµСЂРµ
+    	if sampIsPlayerConnected(i) then -- РµСЃР»Рё РІ РёРіСЂРµ С‚Рѕ РґРѕР±Р°РІР»СЏРµРј РІ РјР°СЃСЃРёРІ РµРіРѕ РЅРёРє
         	if sampGetPlayerNickname(i) == nick then
 				--print("ID" .. i .. "nick " .. sampGetPlayerNickname(i))
 				return true
@@ -396,7 +396,7 @@ end
 
 
 
---ПРОВЕРКА НА GALAXY СЕРВЕР
+--РџР РћР’Р•Р РљРђ РќРђ GALAXY РЎР•Р Р’Р•Р 
 
 function sampServerFunc()
 	local ip, port = sampGetCurrentServerAddress()
@@ -424,7 +424,7 @@ end
 
 
 
---ИЗМЕНЕНИЕ КЛАВИШИ ДЛЯ АКТИВАЦИИ ЧЕГО ЛИБО IMGUI
+--РР—РњР•РќР•РќРР• РљР›РђР’РРЁР Р”Р›РЇ РђРљРўРР’РђР¦РР Р§Р•Р“Рћ Р›РР‘Рћ IMGUI
 function EXPORTS.strToIdKeys(str)
 	tKeys = string.split(str, "+")
 	if #tKeys ~= 0 then
@@ -560,19 +560,19 @@ end
 
 function samp.onShowDialog(ID, _, caption, button1, _, textd)
     if flag and sampServerFunc() then
-        if string.find(caption, u8"Статистика") then
+        if string.find(caption, u8"РЎС‚Р°С‚РёСЃС‚РёРєР°") then
             flag = false
             for textd in string.gmatch(textd, '[^\r\n]+') do
-                if textd:find(u8"Работа:") then
-                    if textd:match(u8"Работа:...........(%S+)") == u8"Механик" then
+                if textd:find(u8"Р Р°Р±РѕС‚Р°:") then
+                    if textd:match(u8"Р Р°Р±РѕС‚Р°:...........(%S+)") == u8"РњРµС…Р°РЅРёРє" then
                         jobMechanick = true
                     end
                 end
-				if textd:find(u8"Наркотики:") then
-					kolvon = textd:match(u8"Наркотики:..........(%d+)")
+				if textd:find(u8"РќР°СЂРєРѕС‚РёРєРё:") then
+					kolvon = textd:match(u8"РќР°СЂРєРѕС‚РёРєРё:..........(%d+)")
 				end
-				if textd:find(u8"Материалы:") then
-					kolvom = textd:match(u8"Материалы:..........(%d+)")
+				if textd:find(u8"РњР°С‚РµСЂРёР°Р»С‹:") then
+					kolvom = textd:match(u8"РњР°С‚РµСЂРёР°Р»С‹:..........(%d+)")
 					print(kolvon, kolvom)
 				end
             end
