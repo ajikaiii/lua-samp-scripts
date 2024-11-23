@@ -1,3 +1,6 @@
+script_name("myLib")
+script_author("by_AJIKAIII")
+
 inicfg = require 'inicfg'
 local key = require 'vkeys'
 local encoding = require 'encoding'
@@ -102,6 +105,54 @@ function EXPORTS.aboutme()
 end
 
 
+
+
+script_version '1.0.0'
+local dlstatus = require('moonloader').download_status
+
+function update()
+    local update_url = "https://raw.githubusercontent.com/ajikaiii/lua-samp-scripts/refs/heads/main/myLibUpdate.json"
+    local update_path = getWorkingDirectory() .. "/myLibUpdate.json"
+
+    local script_url = "https://github.com/ajikaiii/lua-samp-scripts/raw/refs/heads/main/myLib.lua"
+    local script_path = getWorkingDirectory() .. "/myLibsa.lua"
+    --local updatePath = os.getenv('TEMP')..'\\Update.json'
+    -- Проверка новой версии
+    
+    downloadUrlToFile(update_url, update_path, function(id, status, p1, p2)
+        print(status)
+        print("       " .. dlstatus.STATUS_ENDDOWNLOADDATA)
+        if status == dlstatus.STATUS_ENDDOWNLOADDATA then
+            print("pfpfpfpfpfp")
+            local file = io.open(update_path, 'r')
+            if file and doesFileExist(update_path) then
+                local info = decodeJson(file:read("*a"))
+                file:close(); os.remove(update_path)
+                if info.version ~= thisScript().version then
+                    print(thisScript().version)
+                    lua_thread.create(function()
+                        wait(2000)
+                        -- Загрузка скрипта, если версия изменилась
+                        downloadUrlToFile(script_url, script_path, function(id, status, p1, p2)
+                            if status == dlstatus.STATUS_ENDDOWNLOADDATA then
+                                sampAddChatMessage(string.format(u8"{FFD700}Скрипт %s. {FFFF00}Обновление успешно загружено, новая версия: " .. info.version, thisScript().name))
+                                print(string.format(u8"{FFD700}Скрипт %s. {FFFF00}Обновление успешно загружено, новая версия: " .. info.version, thisScript().name))
+                                --thisScript():reload()
+                                --[[ lua_thread.create(function()
+									wait(10000)
+									--thisScript():unload()
+									thisScript():reload()
+								end) ]]
+                            end
+                        end)
+                    end)
+                else
+                    -- Обновлений нет
+                end
+            end
+        end
+    end)
+end
 
 
 
@@ -537,7 +588,8 @@ function main()
 	repeat
 		wait(0)
 	until sampIsLocalPlayerSpawned()
-  
+	update()
+
 	wait(1500)
 	flag = true
 	jobMechanick = false
